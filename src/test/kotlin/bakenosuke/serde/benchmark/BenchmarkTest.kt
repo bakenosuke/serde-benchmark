@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test
 class BenchmarkTest {
 
     private val columnSize = 20
+    private val iterations = 1_000_000
     private val benchmarker = SerdeBenchmarker()
 
     private val providers = listOf(
@@ -32,7 +33,7 @@ class BenchmarkTest {
     fun `init`() {
         // when
         val results = providers.associate { provider ->
-            provider.name() to benchmarker.init(serdeProvider = provider)
+            provider.name() to benchmarker.init(serdeProvider = provider, iterations = iterations)
         }
 
         // then
@@ -43,7 +44,7 @@ class BenchmarkTest {
     fun `serialise - simple`() {
         // when
         val results = providers.associate { provider ->
-            provider.name() to benchmarker.serialise(serdeProvider = provider) {
+            provider.name() to benchmarker.serialise(serdeProvider = provider, iterations = iterations) {
                 SimpleDto(
                     id = RandomInteger.randomInteger(),
                     name = RandomString.randomAlphanumericString(),
@@ -62,7 +63,7 @@ class BenchmarkTest {
     fun `deserialise - simple`() {
         // when
         val results = providers.associate { provider ->
-            provider.name() to benchmarker.deserialise(serdeProvider = provider) {
+            provider.name() to benchmarker.deserialise(serdeProvider = provider, iterations = iterations) {
                 SimpleDto(
                     id = RandomInteger.randomInteger(),
                     name = RandomString.randomAlphanumericString(),
@@ -90,7 +91,7 @@ class BenchmarkTest {
             )
         }.toTypedArray()
         val results = providers.associate { provider ->
-            provider.name() to benchmarker.serialise(serdeProvider = provider) {
+            provider.name() to benchmarker.serialise(serdeProvider = provider, iterations = iterations) {
                 data
             }
         }
@@ -112,7 +113,7 @@ class BenchmarkTest {
             )
         }.toTypedArray()
         val results = providers.associate { provider ->
-            provider.name() to benchmarker.deserialise(serdeProvider = provider) {
+            provider.name() to benchmarker.deserialise(serdeProvider = provider, iterations = iterations) {
                 data
             }
         }
