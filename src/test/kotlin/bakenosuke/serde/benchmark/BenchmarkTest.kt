@@ -80,11 +80,12 @@ class BenchmarkTest {
     private fun Map<String, BenchmarkResult>.printAsTable(action: String) {
         println(action)
         println(
-            "| ${"Provider".padStart(columnSize)} | ${"Min".padStart(columnSize)} | ${"Max".padStart(columnSize)} | ${
-                "Average".padStart(
-                    columnSize
-                )
-            } | ${"First".padStart(columnSize)}  |"
+            "| ${"Provider".padStart(columnSize)} " +
+                    "| ${"Min".padStart(columnSize)} " +
+                    "| ${"Max".padStart(columnSize)} " +
+                    "| ${"Average".padStart(columnSize)} " +
+                    "| ${"First".padStart(columnSize)} " +
+                    "|"
         )
         forEach { name, result ->
             println(
