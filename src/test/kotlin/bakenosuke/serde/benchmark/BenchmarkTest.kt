@@ -5,6 +5,7 @@ import bakenosuke.serde.benchmark.gson.GsonSerdeProvider
 import bakenosuke.serde.benchmark.jackson.JacksonSerdeProvider
 import bakenosuke.serde.benchmark.kotlinx.KotlinxSerdeProvider
 import bakenosuke.serde.benchmark.model.SimpleDto
+import bakenosuke.serde.benchmark.moshi.MoshiSerdeProvider
 import com.tyro.oss.randomdata.RandomBoolean
 import com.tyro.oss.randomdata.RandomDouble
 import com.tyro.oss.randomdata.RandomInstance
@@ -20,6 +21,7 @@ class BenchmarkTest {
         GsonSerdeProvider(),
         JacksonSerdeProvider(),
         KotlinxSerdeProvider(),
+        MoshiSerdeProvider(),
     )
 
     @Test
