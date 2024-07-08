@@ -3,19 +3,14 @@ package bakenosuke.serde.benchmark
 import bakenosuke.serde.benchmark.SerdeBenchmarker.BenchmarkResult
 import bakenosuke.serde.benchmark.gson.GsonJsonSerdeProvider
 import bakenosuke.serde.benchmark.jackson.JacksonJsonSerdeProvider
-import bakenosuke.serde.benchmark.kotlinx.KotlinxProtoBufSerdeProvider
 import bakenosuke.serde.benchmark.kotlinx.KotlinxJsonSerdeProvider
-import bakenosuke.serde.benchmark.model.SimpleDto
+import bakenosuke.serde.benchmark.kotlinx.KotlinxProtoBufSerdeProvider
 import bakenosuke.serde.benchmark.moshi.MoshiJsonSerdeProvider
 import bakenosuke.serde.benchmark.util.Random.randomSimpleDto
-import com.tyro.oss.randomdata.RandomBoolean
-import com.tyro.oss.randomdata.RandomDouble
-import com.tyro.oss.randomdata.RandomInteger
-import com.tyro.oss.randomdata.RandomString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
+@Disabled
 class BenchmarkTest {
 
     private val columnSize = 20

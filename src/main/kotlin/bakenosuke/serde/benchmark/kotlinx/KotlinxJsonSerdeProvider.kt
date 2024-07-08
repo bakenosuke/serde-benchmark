@@ -17,6 +17,7 @@ class KotlinxJsonSerdeProvider : SerdeProvider<Json, String> {
         return Json.encodeToString(serializersModule.serializer(target.javaClass), target)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <V : Any> deserialise(content: String, clazz: Class<V>): V {
         return Json.decodeFromString(serializersModule.serializer(clazz), content) as V
     }
