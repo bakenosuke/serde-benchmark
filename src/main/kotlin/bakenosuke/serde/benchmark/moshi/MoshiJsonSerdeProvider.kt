@@ -4,7 +4,7 @@ import bakenosuke.serde.benchmark.SerdeProvider
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
-class MoshiJsonSerdeProvider : SerdeProvider<Moshi> {
+class MoshiJsonSerdeProvider : SerdeProvider<Moshi, String> {
 
     private val moshi: Moshi by lazy { init() }
 
@@ -20,8 +20,8 @@ class MoshiJsonSerdeProvider : SerdeProvider<Moshi> {
         return moshi.adapter(target.javaClass).toJson(target)
     }
 
-    override fun <V : Any> deserialise(json: String, clazz: Class<V>): V {
-        return moshi.adapter(clazz).fromJson(json)!!
+    override fun <V : Any> deserialise(content: String, clazz: Class<V>): V {
+        return moshi.adapter(clazz).fromJson(content)!!
     }
 
 }

@@ -11,6 +11,8 @@ import com.tyro.oss.randomdata.RandomBoolean
 import com.tyro.oss.randomdata.RandomDouble
 import com.tyro.oss.randomdata.RandomInteger
 import com.tyro.oss.randomdata.RandomString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 class BenchmarkTest {
@@ -56,11 +58,42 @@ class BenchmarkTest {
         results.printAsTable("Serialisation (Simple)")
     }
 
-    private fun Map<String,BenchmarkResult>.printAsTable(action:String) {
+    @Test
+    fun `deserialise - simple`() {
+        // when
+        val results = providers.associate { provider ->
+            provider.name() to benchmarker.deserialise(serdeProvider = provider) {
+                SimpleDto(
+                    id = RandomInteger.randomInteger(),
+                    name = RandomString.randomAlphanumericString(),
+                    description = RandomString.randomAlphanumericString(),
+                    value = RandomDouble.randomDouble(),
+                    enabled = RandomBoolean.randomBoolean(),
+                )
+            }
+        }
+
+        // then
+        results.printAsTable("Deserialisation (Simple)")
+    }
+
+    private fun Map<String, BenchmarkResult>.printAsTable(action: String) {
         println(action)
-        println("| ${"Provider".padStart(columnSize)} | ${"Min".padStart(columnSize)} | ${"Max".padStart(columnSize)} | ${"Average".padStart(columnSize)} | ${"First".padStart(columnSize)}  |")
+        println(
+            "| ${"Provider".padStart(columnSize)} | ${"Min".padStart(columnSize)} | ${"Max".padStart(columnSize)} | ${
+                "Average".padStart(
+                    columnSize
+                )
+            } | ${"First".padStart(columnSize)}  |"
+        )
         forEach { name, result ->
-            println("| ${name.padStart(columnSize)} | ${result.min.toString().padStart(columnSize)} | ${result.max.toString().padStart(columnSize)} | ${result.average.toString().padStart(columnSize)} | ${result.first.toString().padStart(columnSize)} |")
+            println(
+                "| ${name.padStart(columnSize)} | ${
+                    result.min.toString().padStart(columnSize)
+                } | ${result.max.toString().padStart(columnSize)} | ${
+                    result.average.toString().padStart(columnSize)
+                } | ${result.first.toString().padStart(columnSize)} |"
+            )
         }
     }
 

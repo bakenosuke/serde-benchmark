@@ -1,13 +1,13 @@
 package bakenosuke.serde.benchmark
 
-interface SerdeProvider<T> {
+interface SerdeProvider<T, Z> {
 
     fun name(): String
 
     fun init(): T
 
-    fun <V : Any> serialise(target: V): String
+    fun <V : Any> serialise(target: V): Z
 
-    fun <V : Any> deserialise(json: String, clazz: Class<V>): V
+    fun <V : Any> deserialise(content: Z, clazz: Class<V>): V
 
 }

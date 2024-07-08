@@ -11,20 +11,19 @@ import kotlinx.serialization.serializer
 import kotlin.reflect.typeOf
 
 @OptIn(ExperimentalSerializationApi::class)
-class KotlinxProtoBufSerdeProvider : SerdeProvider<ProtoBuf> {
+class KotlinxProtoBufSerdeProvider : SerdeProvider<ProtoBuf, ByteArray> {
     override fun name() = "kotlinx-protobuf"
 
     override fun init(): ProtoBuf {
         return ProtoBuf.Default
     }
 
-    override fun <V : Any> serialise(target: V): String {
-        ProtoBuf.encodeToByteArray(serializersModule.serializer(target.javaClass),target)
-        return ""
+    override fun <V : Any> serialise(target: V): ByteArray {
+        return ProtoBuf.encodeToByteArray(serializersModule.serializer(target.javaClass), target)
     }
 
-    override fun <V : Any> deserialise(json: String, clazz: Class<V>): V {
-        TODO()
+    override fun <V : Any> deserialise(content: ByteArray, clazz: Class<V>): V {
+        return ProtoBuf.decodeFromByteArray(serializersModule.serializer(clazz), content) as V
     }
 
 }

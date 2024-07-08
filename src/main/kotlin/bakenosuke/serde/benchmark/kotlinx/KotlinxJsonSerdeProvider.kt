@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.Json.Default.serializersModule
 import kotlinx.serialization.serializer
 
-class KotlinxJsonSerdeProvider : SerdeProvider<Json> {
+class KotlinxJsonSerdeProvider : SerdeProvider<Json, String> {
 
     override fun name() = "kotlinx"
 
@@ -17,8 +17,8 @@ class KotlinxJsonSerdeProvider : SerdeProvider<Json> {
         return Json.encodeToString(serializersModule.serializer(target.javaClass), target)
     }
 
-    override fun <V : Any> deserialise(json: String, clazz: Class<V>): V {
-        return Json.decodeFromString(serializersModule.serializer(clazz), json) as V
+    override fun <V : Any> deserialise(content: String, clazz: Class<V>): V {
+        return Json.decodeFromString(serializersModule.serializer(clazz), content) as V
     }
 
 }

@@ -4,7 +4,7 @@ import kotlin.time.measureTimedValue
 
 class SerdeBenchmarker {
     fun init(
-        serdeProvider: SerdeProvider<*>,
+        serdeProvider: SerdeProvider<*, *>,
         iterations: Int = 1_000_000,
     ): BenchmarkResult {
         val results = mutableListOf<Long>()
@@ -19,7 +19,7 @@ class SerdeBenchmarker {
     }
 
     fun serialise(
-        serdeProvider: SerdeProvider<*>,
+        serdeProvider: SerdeProvider<*, *>,
         iterations: Int = 1_000_000,
         modelProvider: () -> Any,
     ): BenchmarkResult {
@@ -27,6 +27,24 @@ class SerdeBenchmarker {
         repeat(iterations) {
             val model = modelProvider.invoke()
             val (_, duration) = measureTimedValue { serdeProvider.serialise(model) }
+            results += duration.inWholeNanoseconds
+        }
+        return BenchmarkResult(
+            iterations = iterations,
+            durationNanos = results
+        )
+    }
+
+    fun <T, Z : Any> deserialise(
+        serdeProvider: SerdeProvider<T, Z>,
+        iterations: Int = 1_000_000,
+        modelProvider: () -> Any,
+    ): BenchmarkResult {
+        val results = mutableListOf<Long>()
+        val model = modelProvider.invoke()
+        val serialised = serdeProvider.serialise(model)
+        repeat(iterations) {
+            val (_, duration) = measureTimedValue { serdeProvider.deserialise(serialised, model.javaClass) }
             results += duration.inWholeNanoseconds
         }
         return BenchmarkResult(
