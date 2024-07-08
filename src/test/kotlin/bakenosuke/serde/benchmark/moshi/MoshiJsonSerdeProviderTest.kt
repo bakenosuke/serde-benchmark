@@ -1,10 +1,8 @@
 package bakenosuke.serde.benchmark.moshi
 
-import bakenosuke.serde.benchmark.kotlinx.KotlinxJsonSerdeProvider
 import bakenosuke.serde.benchmark.model.SimpleDto
 import bakenosuke.serde.benchmark.util.Random
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class MoshiJsonSerdeProviderTest {
