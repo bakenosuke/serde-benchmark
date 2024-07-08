@@ -89,11 +89,12 @@ class BenchmarkTest {
         )
         forEach { name, result ->
             println(
-                "| ${name.padStart(columnSize)} | ${
-                    result.min.toString().padStart(columnSize)
-                } | ${result.max.toString().padStart(columnSize)} | ${
-                    result.average.toString().padStart(columnSize)
-                } | ${result.first.toString().padStart(columnSize)} |"
+                "| ${name.padStart(columnSize)} " +
+                        "| ${result.min.toString().padStart(columnSize)} " +
+                        "| ${result.max.toString().padStart(columnSize)} " +
+                        "| ${result.average.toString().padStart(columnSize)} " +
+                        "| ${result.first.toString().padStart(columnSize)} " +
+                        "|"
             )
         }
     }
