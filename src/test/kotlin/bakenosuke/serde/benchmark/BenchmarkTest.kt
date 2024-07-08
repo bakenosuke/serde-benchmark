@@ -77,6 +77,50 @@ class BenchmarkTest {
         results.printAsTable("Deserialisation (Simple)")
     }
 
+    @Test
+    fun `serialise - simple collection`() {
+        // when
+        val data = List(100) {
+            SimpleDto(
+                id = RandomInteger.randomInteger(),
+                name = RandomString.randomAlphanumericString(),
+                description = RandomString.randomAlphanumericString(),
+                value = RandomDouble.randomDouble(),
+                enabled = RandomBoolean.randomBoolean(),
+            )
+        }.toTypedArray()
+        val results = providers.associate { provider ->
+            provider.name() to benchmarker.serialise(serdeProvider = provider) {
+                data
+            }
+        }
+
+        // then
+        results.printAsTable("Serialisation (Simple Collection)")
+    }
+
+    @Test
+    fun `deserialise - simple collection`() {
+        // when
+        val data = List(100) {
+            SimpleDto(
+                id = RandomInteger.randomInteger(),
+                name = RandomString.randomAlphanumericString(),
+                description = RandomString.randomAlphanumericString(),
+                value = RandomDouble.randomDouble(),
+                enabled = RandomBoolean.randomBoolean(),
+            )
+        }.toTypedArray()
+        val results = providers.associate { provider ->
+            provider.name() to benchmarker.deserialise(serdeProvider = provider) {
+                data
+            }
+        }
+
+        // then
+        results.printAsTable("Deserialisation (Simple Collection)")
+    }
+
     private fun Map<String, BenchmarkResult>.printAsTable(action: String) {
         println(action)
         println(
@@ -87,7 +131,7 @@ class BenchmarkTest {
                     "| ${"First".padStart(columnSize)} " +
                     "|"
         )
-        forEach { name, result ->
+        forEach { (name, result) ->
             println(
                 "| ${name.padStart(columnSize)} " +
                         "| ${result.min.toString().padStart(columnSize)} " +
