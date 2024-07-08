@@ -3,7 +3,7 @@ package bakenosuke.serde.benchmark.gson
 import bakenosuke.serde.benchmark.SerdeProvider
 import com.google.gson.Gson
 
-class GsonSerdeProvider : SerdeProvider<Gson> {
+class GsonJsonSerdeProvider : SerdeProvider<Gson> {
 
     private val gson: Gson by lazy { init() }
 

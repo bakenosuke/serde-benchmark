@@ -2,9 +2,8 @@ package bakenosuke.serde.benchmark.jackson
 
 import bakenosuke.serde.benchmark.SerdeProvider
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.gson.Gson
 
-class JacksonSerdeProvider : SerdeProvider<ObjectMapper> {
+class JacksonJsonSerdeProvider : SerdeProvider<ObjectMapper> {
 
     private val objectMapper: ObjectMapper by lazy { init() }
 

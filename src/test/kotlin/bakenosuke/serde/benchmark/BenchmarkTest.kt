@@ -1,27 +1,29 @@
 package bakenosuke.serde.benchmark
 
 import bakenosuke.serde.benchmark.SerdeBenchmarker.BenchmarkResult
-import bakenosuke.serde.benchmark.gson.GsonSerdeProvider
-import bakenosuke.serde.benchmark.jackson.JacksonSerdeProvider
-import bakenosuke.serde.benchmark.kotlinx.KotlinxSerdeProvider
+import bakenosuke.serde.benchmark.gson.GsonJsonSerdeProvider
+import bakenosuke.serde.benchmark.jackson.JacksonJsonSerdeProvider
+import bakenosuke.serde.benchmark.kotlinx.KotlinxProtoBufSerdeProvider
+import bakenosuke.serde.benchmark.kotlinx.KotlinxJsonSerdeProvider
 import bakenosuke.serde.benchmark.model.SimpleDto
-import bakenosuke.serde.benchmark.moshi.MoshiSerdeProvider
+import bakenosuke.serde.benchmark.moshi.MoshiJsonSerdeProvider
 import com.tyro.oss.randomdata.RandomBoolean
 import com.tyro.oss.randomdata.RandomDouble
-import com.tyro.oss.randomdata.RandomInstance
 import com.tyro.oss.randomdata.RandomInteger
 import com.tyro.oss.randomdata.RandomString
 import org.junit.jupiter.api.Test
 
 class BenchmarkTest {
 
+    private val columnSize = 20
     private val benchmarker = SerdeBenchmarker()
 
     private val providers = listOf(
-        GsonSerdeProvider(),
-        JacksonSerdeProvider(),
-        KotlinxSerdeProvider(),
-        MoshiSerdeProvider(),
+        GsonJsonSerdeProvider(),
+        JacksonJsonSerdeProvider(),
+        KotlinxJsonSerdeProvider(),
+        KotlinxProtoBufSerdeProvider(),
+        MoshiJsonSerdeProvider(),
     )
 
     @Test
@@ -56,9 +58,9 @@ class BenchmarkTest {
 
     private fun Map<String,BenchmarkResult>.printAsTable(action:String) {
         println(action)
-        println("| ${"Provider".padStart(15)} | ${"Min".padStart(15)} | ${"Max".padStart(15)} | ${"Average".padStart(15)} | ${"First".padStart(15)}  |")
+        println("| ${"Provider".padStart(columnSize)} | ${"Min".padStart(columnSize)} | ${"Max".padStart(columnSize)} | ${"Average".padStart(columnSize)} | ${"First".padStart(columnSize)}  |")
         forEach { name, result ->
-            println("| ${name.padStart(15)} | ${result.min.toString().padStart(15)} | ${result.max.toString().padStart(15)} | ${result.average.toString().padStart(15)} | ${result.first.toString().padStart(15)} |")
+            println("| ${name.padStart(columnSize)} | ${result.min.toString().padStart(columnSize)} | ${result.max.toString().padStart(columnSize)} | ${result.average.toString().padStart(columnSize)} | ${result.first.toString().padStart(columnSize)} |")
         }
     }
 
