@@ -19,7 +19,7 @@ class JacksonSerdeProvider : SerdeProvider<ObjectMapper> {
     }
 
     override fun <V : Any> deserialise(json: String, clazz: Class<V>): V {
-        TODO()
+        return objectMapper.readValue(json, clazz)
     }
 
 }
