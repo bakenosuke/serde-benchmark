@@ -7,6 +7,7 @@ import bakenosuke.serde.benchmark.kotlinx.KotlinxProtoBufSerdeProvider
 import bakenosuke.serde.benchmark.kotlinx.KotlinxJsonSerdeProvider
 import bakenosuke.serde.benchmark.model.SimpleDto
 import bakenosuke.serde.benchmark.moshi.MoshiJsonSerdeProvider
+import bakenosuke.serde.benchmark.util.Random.randomSimpleDto
 import com.tyro.oss.randomdata.RandomBoolean
 import com.tyro.oss.randomdata.RandomDouble
 import com.tyro.oss.randomdata.RandomInteger
@@ -45,13 +46,7 @@ class BenchmarkTest {
         // when
         val results = providers.associate { provider ->
             provider.name() to benchmarker.serialise(serdeProvider = provider, iterations = iterations) {
-                SimpleDto(
-                    id = RandomInteger.randomInteger(),
-                    name = RandomString.randomAlphanumericString(),
-                    description = RandomString.randomAlphanumericString(),
-                    value = RandomDouble.randomDouble(),
-                    enabled = RandomBoolean.randomBoolean(),
-                )
+                randomSimpleDto()
             }
         }
 
@@ -64,13 +59,7 @@ class BenchmarkTest {
         // when
         val results = providers.associate { provider ->
             provider.name() to benchmarker.deserialise(serdeProvider = provider, iterations = iterations) {
-                SimpleDto(
-                    id = RandomInteger.randomInteger(),
-                    name = RandomString.randomAlphanumericString(),
-                    description = RandomString.randomAlphanumericString(),
-                    value = RandomDouble.randomDouble(),
-                    enabled = RandomBoolean.randomBoolean(),
-                )
+                randomSimpleDto()
             }
         }
 
@@ -82,13 +71,7 @@ class BenchmarkTest {
     fun `serialise - simple collection`() {
         // when
         val data = List(100) {
-            SimpleDto(
-                id = RandomInteger.randomInteger(),
-                name = RandomString.randomAlphanumericString(),
-                description = RandomString.randomAlphanumericString(),
-                value = RandomDouble.randomDouble(),
-                enabled = RandomBoolean.randomBoolean(),
-            )
+            randomSimpleDto()
         }.toTypedArray()
         val results = providers.associate { provider ->
             provider.name() to benchmarker.serialise(serdeProvider = provider, iterations = iterations) {
@@ -104,13 +87,7 @@ class BenchmarkTest {
     fun `deserialise - simple collection`() {
         // when
         val data = List(100) {
-            SimpleDto(
-                id = RandomInteger.randomInteger(),
-                name = RandomString.randomAlphanumericString(),
-                description = RandomString.randomAlphanumericString(),
-                value = RandomDouble.randomDouble(),
-                enabled = RandomBoolean.randomBoolean(),
-            )
+            randomSimpleDto()
         }.toTypedArray()
         val results = providers.associate { provider ->
             provider.name() to benchmarker.deserialise(serdeProvider = provider, iterations = iterations) {

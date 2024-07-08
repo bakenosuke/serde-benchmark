@@ -7,7 +7,6 @@ class GsonJsonSerdeProvider : SerdeProvider<Gson, String> {
 
     private val gson: Gson by lazy { init() }
 
-
     override fun name() = "gson"
 
     override fun init(): Gson {
